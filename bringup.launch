@@ -1,0 +1,33 @@
+<!--
+  All-in-one bringup
+ -->
+<launch>
+
+	<!--基础驱动-->
+	<include file="$(find spark_description)/launch/spark_description.launch"/>
+	<include file="$(find spark_base)/launch/spark_base.launch">
+		<arg name="serialport" value="/dev/sparkBase"/>
+	</include>
+
+	<!--相机 (已关闭高带宽负载)-->
+	<include file="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="align_depth" value="false"/>
+		<arg name="enable_pointcloud" value="false"/>
+		<arg name="initial_reset" value="true"/>
+	</include>
+
+	<!--语音识别+TTS-->
+	<node pkg="g11_robot" type="xfyun_asr_ros.py" name="xfyun_asr" output="screen"/>
+	<node pkg="g11_robot" type="baidu_tts.py"     name="baidu_tts" output="screen"/>
+
+	<!--人脸解锁+颜色+天气-->
+	<node pkg="g11_robot" type="assistant_node.py" name="assistant_node" output="screen"/>
+	<!--大模型问答与聊天-->
+	<node pkg="g11_robot" type="xf_nlu.py" name="xunfei_llm_node" output="screen"/>
+	<!--语音触发跟随-->
+	<node pkg="g11_robot" type="voice_follow_trigger.py" name="voice_follow_trigger" output="screen"/>
+
+	<!--rviz-->
+	<arg name="rvizconfig" default="$(find spark_follower)/rviz/follow.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
+</launch>

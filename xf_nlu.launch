@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- 讯飞星火大模型NLU对话节点 -->
+    <node pkg="g11_robot" type="xf_nlu.py" name="xunfei_llm_node" output="screen"/>
+</launch>

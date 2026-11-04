@@ -1,0 +1,6 @@
+<launch>
+    <!-- 仅调试语音助手：无驱动、无跟随 -->
+    <node pkg="g11_robot" type="xfyun_asr_ros.py" name="xfyun_asr" output="screen"/>
+    <node pkg="g11_robot" type="baidu_tts.py"     name="baidu_tts" output="screen"/>
+    <node pkg="g11_robot" type="assistant_node.py" name="assistant_node" output="screen"/>
+</launch>
